@@ -35,7 +35,7 @@ namespace Lager.Portable
         protected T GetOrCreate<T>(T defaultValue, [CallerMemberName] string key = null)
         {
             if (key == null)
-                throw new InvalidOperationException("Key is null!");
+                throw new ArgumentNullException("key");
 
             this.cacheLock.EnterReadLock();
 

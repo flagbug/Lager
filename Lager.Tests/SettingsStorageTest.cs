@@ -51,6 +51,14 @@ namespace Lager.Tests
         }
 
         [Fact]
+        public void GetOrCreateWithNullKeyThrowsArgumentNullException()
+        {
+            var settings = new SettingsStorageProxy();
+
+            Assert.Throws<ArgumentNullException>(() => settings.GetOrCreateProxy(42, null));
+        }
+
+        [Fact]
         public void SetOrCreateInsertsValueIntoBlobCache()
         {
             var cache = new TestBlobCache();
@@ -59,6 +67,14 @@ namespace Lager.Tests
             settings.SetOrCreateProxy(42, "TestNumber");
 
             Assert.Equal(1, cache.GetAllKeys().Count());
+        }
+
+        [Fact]
+        public void SetOrCreateWithNullKeyThrowsArgumentNullException()
+        {
+            var settings = new SettingsStorageProxy();
+
+            Assert.Throws<ArgumentNullException>(() => settings.SetOrCreateProxy(42, null));
         }
     }
 }
