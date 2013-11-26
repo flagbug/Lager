@@ -71,6 +71,7 @@ namespace Lager.Portable
 
         /// <summary>
         /// Overwrites the existing value or creates a new settings entry.
+        /// The value is serialized via the Json.Net serializer.
         /// </summary>
         /// <typeparam name="T">The type of the value to set or create.</typeparam>
         /// <param name="value">The value to be set or created.</param>
