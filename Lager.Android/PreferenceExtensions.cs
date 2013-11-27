@@ -37,6 +37,7 @@ namespace Lager.Android
             Action<object, object> preferenceSetter = Reflection.GetValueSetterForProperty(preference.GetType(), preferencePropertyName);
 
             IDisposable disp2 = storage.WhenAnyValue(settingProperty)
+                .Select(settingToPreferencePropertyConverter)
                 .Subscribe(x => preferenceSetter(preference, x));
             disposable.Add(disp2);
 
