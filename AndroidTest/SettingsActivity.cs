@@ -19,8 +19,11 @@ namespace AndroidTest
 
             var storage = new TestSettings();
 
-            var portPreference = this.FindPreference("pref_port");
-            portPreference.BindSetting(storage, x => x.Port, x => int.Parse(x.ToString()));
+            var textPreference = this.FindPreference("pref_text");
+            textPreference.BindSetting(storage, x => x.Text, x => x.ToString());
+
+            var boolPreference = this.FindPreference("pref_bool");
+            boolPreference.BindSetting(storage, x => x.Boolean, x => bool.Parse((string)x));
         }
     }
 }

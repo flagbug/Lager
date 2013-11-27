@@ -24,12 +24,8 @@ namespace Lager.Android
                 .Subscribe(x => setter(storage, x));
             disposable.Add(disp1);
 
-            IDisposable disp2 = storage.WhenAnyValue(setting, x => x.ToString())
-                .Subscribe(x =>
-                {
-                    var manager = PreferenceManager.GetDefaultSharedPreferences(preference.Context);
-                    manager.Edit().PutString(preference.Key, x).Apply();
-                });
+            IDisposable disp2 = storage.WhenAnyValue(setting)
+                .Subscribe(x => SetAppropriatePreferenceValue(preference, x));
             disposable.Add(disp2);
 
             return disposable;
@@ -42,8 +38,31 @@ namespace Lager.Android
                     h => preference.PreferenceChange -= h)
                 .Select(x => x.EventArgs)
                 .Select(x => new { EventArgs = x, Value = converter(x.NewValue) })
-                .Do(x => x.EventArgs.Handled = validator == null || validator(x.Value))
+                .Select(x => new { EventArgs = x.EventArgs, Value = x.Value, IsValid = validator == null || validator(x.Value) })
+                .Do(x => x.EventArgs.Handled = x.IsValid)
+                .Where(x => x.IsValid)
                 .Select(x => x.Value);
+        }
+
+        private static void SetAppropriatePreferenceValue(Preference preference, object value)
+        {
+            var checkBoxPreference = preference as CheckBoxPreference;
+            if (checkBoxPreference != null)
+            {
+                checkBoxPreference.Checked = (bool)value;
+            }
+
+            var editTextPreference = preference as EditTextPreference;
+            if (editTextPreference != null)
+            {
+                editTextPreference.Text = value.ToString();
+            }
+
+            var listPreference = preference as ListPreference;
+            if (listPreference != null)
+            {
+                listPreference.Value = value.ToString();
+            }
         }
     }
 }
