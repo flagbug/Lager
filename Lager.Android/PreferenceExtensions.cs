@@ -13,7 +13,7 @@ namespace Lager.Android
         public static IDisposable BindSetting<TPreference, TStorage, TSProp, TPProp>(
             this TPreference preference,
             TStorage storage,
-            Expression<Func<TStorage, TSProp>> setting,
+            Expression<Func<TStorage, TSProp>> settingProperty,
             Expression<Func<TPreference, TPProp>> prefProperty,
             Func<Java.Lang.Object, TSProp> preferencePropertyToSettingConverter,
             Func<TSProp, TPProp> settingToPreferencePropertyConverter,
@@ -25,7 +25,8 @@ namespace Lager.Android
 
             var disposable = new CompositeDisposable();
 
-            string settingName = Reflection.SimpleExpressionToPropertyName(setting);
+            string settingName = GetPropertyNameSafe(settingProperty);
+
             Action<object, object> setter = Reflection.GetValueSetterForProperty(storage.GetType(), settingName);
 
             IDisposable disp1 = preference.PreferenceChanged(preferencePropertyToSettingConverter)
@@ -35,7 +36,7 @@ namespace Lager.Android
             string preferencePropertyName = Reflection.SimpleExpressionToPropertyName(prefProperty);
             Action<object, object> preferenceSetter = Reflection.GetValueSetterForProperty(preference.GetType(), preferencePropertyName);
 
-            IDisposable disp2 = storage.WhenAnyValue(setting)
+            IDisposable disp2 = storage.WhenAnyValue(settingProperty)
                 .Subscribe(x => preferenceSetter(preference, x));
             disposable.Add(disp2);
 
@@ -53,6 +54,20 @@ namespace Lager.Android
                 .Do(x => x.EventArgs.Handled = x.IsValid)
                 .Where(x => x.IsValid)
                 .Select(x => x.Value);
+        }
+
+        private static string GetPropertyNameSafe<TObj, TRet>(Expression<Func<TObj, TRet>> expression)
+        {
+            // Enums have a different expression tree
+            if (expression.Body.NodeType == ExpressionType.Convert)
+            {
+                var unaryExpr = (UnaryExpression)expression.Body;
+                var expr = (MemberExpression)unaryExpr.Operand;
+
+                return expr.Member.Name;
+            }
+
+            return Reflection.SimpleExpressionToPropertyName(expression);
         }
     }
 }
