@@ -10,8 +10,16 @@ namespace Lager.Android
 {
     public static class PreferenceExtensions
     {
-        public static IDisposable BindSetting<TStorage, TSetting>(this Preference preference, TStorage storage,
-            Expression<Func<TStorage, TSetting>> setting, Func<Java.Lang.Object, TSetting> parser, Func<TSetting, bool> validator = null) where TStorage : SettingsStorage
+        public static IDisposable BindSetting<TPreference, TStorage, TSProp, TPProp>(
+            this TPreference preference,
+            TStorage storage,
+            Expression<Func<TStorage, TSProp>> setting,
+            Expression<Func<TPreference, TPProp>> prefProperty,
+            Func<Java.Lang.Object, TSProp> preferencePropertyToSettingConverter,
+            Func<TSProp, TPProp> settingToPreferencePropertyConverter,
+            Func<TSProp, bool> validator = null)
+            where TPreference : Preference
+            where TStorage : SettingsStorage
         {
             preference.Persistent = false;
 
@@ -20,12 +28,15 @@ namespace Lager.Android
             string settingName = Reflection.SimpleExpressionToPropertyName(setting);
             Action<object, object> setter = Reflection.GetValueSetterForProperty(storage.GetType(), settingName);
 
-            IDisposable disp1 = preference.PreferenceChanged(parser)
+            IDisposable disp1 = preference.PreferenceChanged(preferencePropertyToSettingConverter)
                 .Subscribe(x => setter(storage, x));
             disposable.Add(disp1);
 
+            string preferencePropertyName = Reflection.SimpleExpressionToPropertyName(prefProperty);
+            Action<object, object> preferenceSetter = Reflection.GetValueSetterForProperty(preference.GetType(), preferencePropertyName);
+
             IDisposable disp2 = storage.WhenAnyValue(setting)
-                .Subscribe(x => SetAppropriatePreferenceValue(preference, x));
+                .Subscribe(x => preferenceSetter(preference, x));
             disposable.Add(disp2);
 
             return disposable;
@@ -42,27 +53,6 @@ namespace Lager.Android
                 .Do(x => x.EventArgs.Handled = x.IsValid)
                 .Where(x => x.IsValid)
                 .Select(x => x.Value);
-        }
-
-        private static void SetAppropriatePreferenceValue(Preference preference, object value)
-        {
-            var checkBoxPreference = preference as CheckBoxPreference;
-            if (checkBoxPreference != null)
-            {
-                checkBoxPreference.Checked = (bool)value;
-            }
-
-            var editTextPreference = preference as EditTextPreference;
-            if (editTextPreference != null)
-            {
-                editTextPreference.Text = value.ToString();
-            }
-
-            var listPreference = preference as ListPreference;
-            if (listPreference != null)
-            {
-                listPreference.Value = value.ToString();
-            }
         }
     }
 }

@@ -19,11 +19,11 @@ namespace AndroidTest
 
             var storage = new TestSettings();
 
-            var textPreference = this.FindPreference("pref_text");
-            textPreference.BindSetting(storage, x => x.Text, x => x.ToString());
+            var textPreference = (EditTextPreference)this.FindPreference("pref_text");
+            textPreference.BindSetting(storage, x => x.Text, x => x.Text, x => x.ToString(), x => x);
 
-            var boolPreference = this.FindPreference("pref_bool");
-            boolPreference.BindSetting(storage, x => x.Boolean, x => bool.Parse((string)x));
+            var boolPreference = (CheckBoxPreference)this.FindPreference("pref_bool");
+            boolPreference.BindSetting(storage, x => x.Boolean, x => x.Checked, x => bool.Parse((string)x), x => x);
         }
     }
 }
