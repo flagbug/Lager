@@ -38,7 +38,7 @@ namespace Lager.Android
                     h => preference.PreferenceChange -= h)
                 .Select(x => x.EventArgs)
                 .Select(x => new { EventArgs = x, Value = converter(x.NewValue) })
-                .Select(x => new { EventArgs = x.EventArgs, Value = x.Value, IsValid = validator == null || validator(x.Value) })
+                .Select(x => new { x.EventArgs, x.Value, IsValid = validator == null || validator(x.Value) })
                 .Do(x => x.EventArgs.Handled = x.IsValid)
                 .Where(x => x.IsValid)
                 .Select(x => x.Value);
