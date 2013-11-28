@@ -23,7 +23,7 @@ namespace Lager.Android
         /// <param name="prefProperty">An expression indicating the property that is bound on the <see cref="Preference"/>.</param>
         /// <param name="preferencePropertyToSettingConverter">
         /// A function to convert the <see cref="Preference"/> property to the setting.
-        /// Convert the <see cref="Java.Lang.Object"/> back to your setting type with this function.
+        /// Convert a <see cref="Java.Lang.Object"/> back to your setting type with this function.
         /// </param>
         /// <param name="settingToPreferencePropertyConverter">
         /// An optional function to convert the setting to the <see cref="Preference"/> property.
