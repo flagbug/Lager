@@ -69,19 +69,6 @@ namespace Lager.Android
             return disposable;
         }
 
-        public static IObservable<T> PreferenceChanged<T>(this Preference preference, Func<Java.Lang.Object, T> converter, Func<T, bool> validator = null)
-        {
-            return Observable.FromEventPattern<Preference.PreferenceChangeEventArgs>(
-                    h => preference.PreferenceChange += h,
-                    h => preference.PreferenceChange -= h)
-                .Select(x => x.EventArgs)
-                .Select(x => new { EventArgs = x, Value = converter(x.NewValue) })
-                .Select(x => new { x.EventArgs, x.Value, IsValid = validator == null || validator(x.Value) })
-                .Do(x => x.EventArgs.Handled = x.IsValid)
-                .Where(x => x.IsValid)
-                .Select(x => x.Value);
-        }
-
         private static string GetPropertyNameSafe<TObj, TRet>(Expression<Func<TObj, TRet>> expression)
         {
             // Enums have a different expression tree
@@ -94,6 +81,19 @@ namespace Lager.Android
             }
 
             return Reflection.SimpleExpressionToPropertyName(expression);
+        }
+
+        private static IObservable<T> PreferenceChanged<T>(this Preference preference, Func<Java.Lang.Object, T> converter, Func<T, bool> validator = null)
+        {
+            return Observable.FromEventPattern<Preference.PreferenceChangeEventArgs>(
+                    h => preference.PreferenceChange += h,
+                    h => preference.PreferenceChange -= h)
+                .Select(x => x.EventArgs)
+                .Select(x => new { EventArgs = x, Value = converter(x.NewValue) })
+                .Select(x => new { x.EventArgs, x.Value, IsValid = validator == null || validator(x.Value) })
+                .Do(x => x.EventArgs.Handled = x.IsValid)
+                .Where(x => x.IsValid)
+                .Select(x => x.Value);
         }
     }
 }
