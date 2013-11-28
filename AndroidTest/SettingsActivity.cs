@@ -29,6 +29,9 @@ namespace AndroidTest
             var listPreference = (ListPreference)this.FindPreference("pref_list");
             listPreference.SetEntryValues(Enum.GetNames(typeof(ListEnum)));
             listPreference.BindToSetting(storage, x => x.ListItem, x => x.Value, x => Enum.Parse(typeof(ListEnum), (string)x), x => x.ToString());
+
+            var validationPreference = (EditTextPreference)this.FindPreference("pref_validation");
+            validationPreference.BindToSetting(storage, x => x.Number, x => x.Text, x => int.Parse(x.ToString()), x => x.ToString(), x => x < 100 && x > 200);
         }
     }
 }

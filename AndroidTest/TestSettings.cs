@@ -28,6 +28,12 @@ namespace AndroidTest
             set { this.SetOrCreate(value); }
         }
 
+        public int Number
+        {
+            get { return this.GetOrCreate(42); }
+            set { this.SetOrCreate(value); }
+        }
+
         public string Text
         {
             get { return this.GetOrCreate("Default text"); }

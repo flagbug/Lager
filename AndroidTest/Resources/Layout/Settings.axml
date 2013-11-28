@@ -13,4 +13,9 @@
     android:summary="A list list of values"
     android:title="List"
     android:entries="@array/listEntries" />
+  <EditTextPreference
+    android:key="pref_validation"
+    android:summary="No values from 100 - 200"
+    android:title="Validation"
+    android:inputType="number" />
 </PreferenceScreen>
