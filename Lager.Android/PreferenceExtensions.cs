@@ -41,7 +41,7 @@ namespace Lager.Android
             Expression<Func<TStorage, TSProp>> settingProperty,
             Expression<Func<TPreference, TPProp>> prefProperty,
             Func<Java.Lang.Object, TSProp> preferencePropertyToSettingConverter,
-            Func<TSProp, TPProp> settingToPreferencePropertyConverter,
+            Func<TSProp, TPProp> settingToPreferencePropertyConverter = null,
             Func<TSProp, bool> validator = null)
             where TPreference : Preference
             where TStorage : SettingsStorage
@@ -62,7 +62,7 @@ namespace Lager.Android
             Action<object, object> preferenceSetter = Reflection.GetValueSetterForProperty(preference.GetType(), preferencePropertyName);
 
             IDisposable disp2 = storage.WhenAnyValue(settingProperty)
-                .Select(settingToPreferencePropertyConverter)
+                .Select(x => settingToPreferencePropertyConverter == null ? (object)x : settingToPreferencePropertyConverter(x))
                 .Subscribe(x => preferenceSetter(preference, x));
             disposable.Add(disp2);
 

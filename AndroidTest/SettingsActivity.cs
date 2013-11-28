@@ -21,10 +21,10 @@ namespace AndroidTest
             var storage = new TestSettings();
 
             var textPreference = (EditTextPreference)this.FindPreference("pref_text");
-            textPreference.BindToSetting(storage, x => x.Text, x => x.Text, x => x.ToString(), x => x);
+            textPreference.BindToSetting(storage, x => x.Text, x => x.Text, x => x.ToString());
 
             var boolPreference = (CheckBoxPreference)this.FindPreference("pref_bool");
-            boolPreference.BindToSetting(storage, x => x.Boolean, x => x.Checked, x => bool.Parse((string)x), x => x);
+            boolPreference.BindToSetting(storage, x => x.Boolean, x => x.Checked, x => bool.Parse((string)x));
 
             var listPreference = (ListPreference)this.FindPreference("pref_list");
             listPreference.SetEntryValues(Enum.GetNames(typeof(ListEnum)));
