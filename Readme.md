@@ -44,3 +44,44 @@ or
 
 That's simple, both `GetOrCreate` and `SetOrCreate` have a second optional parameter that is marked with the `CallerMemberName` attribute.
 This means a property called `MyCoolString` is stored with the key `MyCoolString`
+
+## Android
+
+Since the Android preferences API is a nightmare to use, Lager has a useful function called `BindToSetting`.
+`BindToSetting` is an extension method for the `Preference` class and creates a two-way binding between the `Preference` and a property in a `SettingsStorage`.
+Changes to the `Preference` are automatically propagated to the `SettingsStorage` and vice-versa.
+
+An example:
+
+Define you settings layout like normal, but without default values or any other nonsense
+
+	<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	  <EditTextPreference
+		  android:key="pref_text"
+		  android:summary="Save text here"
+		  android:title="Text" />
+	</PreferenceScreen>
+
+And in your settings activity you simply write:
+
+	protected override void OnCreate(Bundle bundle)
+	{
+		// Layout setup and stuff
+		
+		var textPreference = (EditTextPreference)this.FindPreference("pref_text");
+		textPreference.BindToSetting(UserSettings.Instance, x => x.MySettingsString, x => x.Text, x => x.ToString());
+	}
+	
+So what have we done here?
+
+As said before, `BindToSetting` is an extension method for the `Preference` class, so we pulled an instance of our `EditTextPreference` from our `PreferenceActivity`.
+
+The first parameter an instance of our settings storage. For simplification, we assume a singleton instance here.
+
+The second parameter is an expression that describes what property in our settings storage we want to bind.
+
+The third parameter is an expression that describes on which property of or `Preference` we want our setting to be bound on.
+Here we have an `EditTextPreference`, so we bind it the its `Text` property. If you have a `CheckBoxPreference` for example, you most likely want to bind on its `Checked` property.
+
+The fourth parameter is a function that converts a value from the `Preference` class to our `SettingsStorage`. 
+This is a necessary step, because we have no type info when the `Preference` notifies us that the user entered a value.
