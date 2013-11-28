@@ -54,7 +54,7 @@ namespace Lager.Android
 
             Action<object, object> setter = Reflection.GetValueSetterForProperty(storage.GetType(), settingName);
 
-            IDisposable disp1 = preference.PreferenceChanged(preferencePropertyToSettingConverter)
+            IDisposable disp1 = preference.PreferenceChanged(preferencePropertyToSettingConverter, validator)
                 .Subscribe(x => setter(storage, x));
             disposable.Add(disp1);
 
