@@ -3,6 +3,7 @@ using Android.App;
 using Android.OS;
 using Android.Preferences;
 using Lager.Android;
+using System;
 
 namespace AndroidTest
 {
@@ -24,6 +25,10 @@ namespace AndroidTest
 
             var boolPreference = (CheckBoxPreference)this.FindPreference("pref_bool");
             boolPreference.BindSetting(storage, x => x.Boolean, x => x.Checked, x => bool.Parse((string)x), x => x);
+
+            var listPreference = (ListPreference)this.FindPreference("pref_list");
+            listPreference.SetEntryValues(Enum.GetNames(typeof(ListEnum)));
+            listPreference.BindSetting(storage, x => x.ListItem, x => x.Value, x => Enum.Parse(typeof(ListEnum), (string)x), x => x.ToString());
         }
     }
 }

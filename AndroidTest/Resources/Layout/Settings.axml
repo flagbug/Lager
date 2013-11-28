@@ -8,4 +8,9 @@
     android:key="pref_bool"
     android:summary="A boolean value"
     android:title="Bool" />
+  <ListPreference
+    android:key="pref_list"
+    android:summary="A list list of values"
+    android:title="List"
+    android:entries="@array/listEntries" />
 </PreferenceScreen>

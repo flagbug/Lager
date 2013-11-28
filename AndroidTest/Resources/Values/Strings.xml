@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Hello">Hello World, Click Me!</string>
-    <string name="ApplicationName">AndroidTest</string>
+  <string name="Hello">Hello World, Click Me!</string>
+  <string name="ApplicationName">AndroidTest</string>
+  <string-array name="listEntries">
+    <item>Item 1</item>
+    <item>Item 2</item>
+    <item>Item 3</item>
+  </string-array>
 </resources>
