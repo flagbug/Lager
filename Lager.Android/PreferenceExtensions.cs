@@ -26,7 +26,7 @@ namespace Lager.Android
         /// Convert the <see cref="Java.Lang.Object"/> back to your setting type with this function.
         /// </param>
         /// <param name="settingToPreferencePropertyConverter">
-        /// A function to convert the setting to the <see cref="Preference"/> property.
+        /// An optional function to convert the setting to the <see cref="Preference"/> property.
         /// Useful when you bind an enum to a <see cref="ListPreference"/>, where you want the enum to be converted to a string.
         /// </param>
         /// <param name="validator">
