@@ -57,8 +57,6 @@
     <Compile Include="TestSettings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AboutResources.txt" />
-    <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\Layout\Settings.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
@@ -84,6 +82,9 @@
       <Project>{146AD439-7ABF-4398-B7A2-CD0DC6BD4AF2}</Project>
       <Name>Lager.Portable_Android</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
