@@ -76,7 +76,7 @@ So what have we done here?
 
 As said before, `BindToSetting` is an extension method for the `Preference` class, so we pulled an instance of our `EditTextPreference` from our `PreferenceActivity`.
 
-The first parameter an instance of our settings storage. For simplification, we assume a singleton instance here.
+The first parameter is an instance of our settings storage. For simplification, we just assume a singleton instance here.
 
 The second parameter is an expression that describes what property in our settings storage we want to bind.
 
@@ -85,3 +85,10 @@ Here we have an `EditTextPreference`, so we bind it the its `Text` property. If 
 
 The fourth parameter is a function that converts a value from the `Preference` class to our `SettingsStorage`. 
 This is a necessary step, because we have no type info when the `Preference` notifies us that the user entered a value.
+
+There is also an optional fifth and sixth parameter.
+The fifth parameter allows for a conversion from the setting in your `SettingsStorage` to the `Preference`s property.
+This is useful if you want to bind non-string types to the `Text` property of an `EditTextPreference` or an enum to a `ListPreference`.
+
+With the sixth parameter you can validate user input. It takes a function that returns a `bool` and provides the value that the user has entered.
+Return true, and the value will be saved, return false and the value will be discarded.
