@@ -10,7 +10,7 @@ namespace Lager.Android
 {
     public static class PreferenceExtensions
     {
-        public static IDisposable BindSetting<TPreference, TStorage, TSProp, TPProp>(
+        public static IDisposable BindToSetting<TPreference, TStorage, TSProp, TPProp>(
             this TPreference preference,
             TStorage storage,
             Expression<Func<TStorage, TSProp>> settingProperty,
