@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Preferences;
 using Lager.Android;
 using System;
+using System.Linq;
 
 namespace AndroidTest
 {
@@ -31,7 +32,21 @@ namespace AndroidTest
             listPreference.BindToSetting(storage, x => x.ListItem, x => x.Value, x => Enum.Parse(typeof(ListEnum), (string)x), x => x.ToString());
 
             var validationPreference = (EditTextPreference)this.FindPreference("pref_validation");
-            validationPreference.BindToSetting(storage, x => x.Number, x => x.Text, x => int.Parse(x.ToString()), x => x.ToString(), x => x < 100 && x > 200);
+            validationPreference.EditText.TextChanged += (sender, args) =>
+            {
+                int value = int.Parse(new string(args.Text.ToArray()));
+
+                if (!IsValid(value))
+                {
+                    validationPreference.EditText.Error = "Value must be between 100 and 200!";
+                }
+            };
+            validationPreference.BindToSetting(storage, x => x.Number, x => x.Text, x => int.Parse(x.ToString()), x => x.ToString(), x => IsValid(x));
+        }
+
+        private static bool IsValid(int value)
+        {
+            return value > 100 && value < 200;
         }
     }
 }
