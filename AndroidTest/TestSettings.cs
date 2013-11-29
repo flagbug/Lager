@@ -12,8 +12,8 @@ namespace AndroidTest
 
     public class TestSettings : SettingsStorage
     {
-        public TestSettings()
-            : base("#Settings#", BlobCache.UserAccount)
+        public TestSettings(IBlobCache blobCache)
+            : base("#Settings#", blobCache)
         { }
 
         public bool Boolean

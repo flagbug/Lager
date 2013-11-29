@@ -17,9 +17,7 @@ namespace AndroidTest
 
             this.AddPreferencesFromResource(Resource.Layout.Settings);
 
-            BlobCache.ApplicationName = "Settings Test App";
-
-            var storage = new TestSettings();
+            var storage = new TestSettings(BlobCache.UserAccount);
 
             var textPreference = (EditTextPreference)this.FindPreference("pref_text");
             textPreference.BindToSetting(storage, x => x.Text, x => x.Text, x => x.ToString());
