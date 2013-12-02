@@ -8,14 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lager.Tests", "Lager.Tests\Lager.Tests.csproj", "{BBC75316-B356-4896-A3F3-AD82DEB1B1B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lager.Android", "Lager.Android\Lager.Android.csproj", "{B65B033B-F457-4B6C-A00B-0D492F014681}"
-	ProjectSection(ProjectDependencies) = postProject
-		{146AD439-7ABF-4398-B7A2-CD0DC6BD4AF2} = {146AD439-7ABF-4398-B7A2-CD0DC6BD4AF2}
-	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidTest", "AndroidTest\AndroidTest.csproj", "{75745489-742E-4423-816D-1178C5529AE4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{146AD439-7ABF-4398-B7A2-CD0DC6BD4AF2} = {146AD439-7ABF-4398-B7A2-CD0DC6BD4AF2}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidExample", "AndroidExample\AndroidExample.csproj", "{75745489-742E-4423-816D-1178C5529AE4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lager.Portable_Android", "Lager.Portable_Android\Lager.Portable_Android.csproj", "{146AD439-7ABF-4398-B7A2-CD0DC6BD4AF2}"
 EndProject
@@ -52,6 +46,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Lager.Portable\Lager.Portable.csproj
+		StartupItem = AndroidExample\AndroidExample.csproj
 	EndGlobalSection
 EndGlobal

@@ -3,10 +3,10 @@ using Android.App;
 using Android.OS;
 using Android.Widget;
 
-namespace AndroidTest
+namespace AndroidExample
 {
-    [Activity(Label = "AndroidTest", MainLauncher = true, Icon = "@drawable/icon")]
-    public class Activity1 : Activity
+    [Activity(Label = "AndroidExample", MainLauncher = true, Icon = "@drawable/icon")]
+    public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -17,7 +17,7 @@ namespace AndroidTest
 
             // Get our button from the layout resource,
             // and attach an event to it
-            Button button = FindViewById<Button>(Resource.Id.MyButton);
+            var button = FindViewById<Button>(Resource.Id.MyButton);
 
             button.Click += (sender, args) => this.StartActivity(typeof(SettingsActivity));
         }

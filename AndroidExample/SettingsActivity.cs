@@ -1,14 +1,14 @@
+using System;
+using System.Linq;
 using Akavache;
 using Android.App;
 using Android.OS;
 using Android.Preferences;
 using Lager.Android;
-using System;
-using System.Linq;
 
-namespace AndroidTest
+namespace AndroidExample
 {
-    [Activity(Label = "My Activity")]
+    [Activity(Label = "Settings")]
     public class SettingsActivity : PreferenceActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -36,7 +36,7 @@ namespace AndroidTest
 
                 if (!IsValid(value))
                 {
-                    validationPreference.EditText.Error = "Value must be between 100 and 200!";
+                    validationPreference.EditText.Error = "Value must be between 0 and 100!";
                 }
             };
             validationPreference.BindToSetting(storage, x => x.Number, x => x.Text, x => int.Parse(x.ToString()), x => x.ToString(), x => IsValid(x));
@@ -44,7 +44,7 @@ namespace AndroidTest
 
         private static bool IsValid(int value)
         {
-            return value > 100 && value < 200;
+            return value > 0 && value < 100;
         }
     }
 }

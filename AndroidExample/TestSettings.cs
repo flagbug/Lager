@@ -1,7 +1,7 @@
 using Akavache;
 using Lager.Portable;
 
-namespace AndroidTest
+namespace AndroidExample
 {
     public enum ListEnum
     {
