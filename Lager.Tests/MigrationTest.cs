@@ -17,5 +17,18 @@ namespace Lager.Tests
 
             Assert.Equal(42, value);
         }
+
+        [Fact]
+        public async Task RenameSmokeTest()
+        {
+            var storage = new SettingsStorageProxy();
+            storage.SetOrCreateProxy(42, "Setting1");
+
+            await storage.MigrateAsync(new[] { new RenameIntegerMigration(1, "Setting1", "Setting2") });
+
+            int value = storage.GetOrCreateProxy(1, "Setting2");
+
+            Assert.Equal(42, value);
+        }
     }
 }

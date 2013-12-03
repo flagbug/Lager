@@ -33,6 +33,15 @@ namespace Lager
             await this.blobCache.InvalidateObject<T>(this.CreateKey(key));
         }
 
+        protected async Task RenameAsync<T>(string previousKey, string newKey)
+        {
+            T value = await this.blobCache.GetObjectAsync<T>(this.CreateKey(previousKey));
+
+            await this.blobCache.InvalidateObject<T>(this.CreateKey(previousKey));
+
+            await this.blobCache.InsertObject(this.CreateKey(newKey), value);
+        }
+
         private string CreateKey(string key)
         {
             return string.Format("{0}:{1}", this.keyPrefix, key);
