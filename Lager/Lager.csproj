@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsMigration.cs" />
     <Compile Include="SettingsStorage.cs" />
   </ItemGroup>
   <ItemGroup>
