@@ -42,7 +42,19 @@ namespace Lager
 
         public async Task MigrateAsync(IEnumerable<SettingsMigration> migrations)
         {
-            foreach (SettingsMigration migration in migrations.OrderBy(x => x.Revision))
+            List<SettingsMigration> migrationsList = migrations.ToList();
+
+            if (!migrationsList.Any())
+                throw new ArgumentException("Migration list is empty.", "migrations");
+
+            bool areRevisionsUnique = migrationsList
+                .GroupBy(x => x.Revision)
+                .All(x => x.Count() == 1);
+
+            if (!areRevisionsUnique)
+                throw new ArgumentException("Migration revisions aren't unique.", "migrations");
+
+            foreach (SettingsMigration migration in migrationsList.OrderBy(x => x.Revision))
             {
                 migration.Initialize(this.keyPrefix, this.blobCache);
                 await migration.MigrateAsync();

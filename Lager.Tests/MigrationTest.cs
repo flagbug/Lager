@@ -1,5 +1,8 @@
 ﻿using Akavache;
+using Moq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -8,6 +11,30 @@ namespace Lager.Tests
 {
     public class MigrationTest
     {
+        public async static Task<T> ThrowsAsync<T>(Func<Task> testCode) where T : Exception
+        {
+            try
+            {
+                await testCode();
+                Assert.Throws<T>(() => { }); // Use xUnit's default behavior.
+            }
+
+            catch (T exception)
+            {
+                return exception;
+            }
+
+            return null;
+        }
+
+        [Fact]
+        public async Task MigrateAsyncThrowsOnEmptyEnumerable()
+        {
+            var storage = new SettingsStorageProxy();
+
+            await ThrowsAsync<ArgumentException>(() => storage.MigrateAsync(Enumerable.Empty<SettingsMigration>()));
+        }
+
         [Fact]
         public async Task RemoveAsyncSmokeTest()
         {
@@ -57,6 +84,19 @@ namespace Lager.Tests
             string value = storage.GetOrCreateProxy("Bla", "Setting");
 
             Assert.Equal("42", value);
+        }
+
+        [Fact]
+        public async Task TransformationsShouldHaveDistinctRevisions()
+        {
+            var storage = new SettingsStorageProxy();
+
+            var migration1 = new Mock<SettingsMigration>(1);
+            var migration2 = new Mock<SettingsMigration>(1);
+
+            var migrations = new[] { migration1.Object, migration2.Object };
+
+            await ThrowsAsync<ArgumentException>(() => storage.MigrateAsync(migrations));
         }
     }
 }
