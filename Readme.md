@@ -2,6 +2,8 @@
 
 Lager is an attempt to create a cross-platform settings storage for .NET
 
+.NET 4.5 and Xamarin.Android is supported as of version 0.1.0
+
 It uses [Akavache](https://github.com/akavache/Akavache) as a simple storage provider, but I'm playing with the thought of using the respective native settings storage for each platform.
 
 Currently Lager can write and read every type of object that can be stored by Akavache.
