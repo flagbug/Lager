@@ -50,7 +50,7 @@ namespace Lager
 
             TAfter after = transformation(before);
 
-            await this.RemoveAsync<TBefore>(key);
+            await this.blobCache.InvalidateObject<TBefore>(key);
 
             await this.blobCache.InsertObject(key, after);
         }

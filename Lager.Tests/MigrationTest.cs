@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using Akavache;
+using System.Collections.Generic;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Lager.Tests
@@ -29,6 +32,18 @@ namespace Lager.Tests
             int value = storage.GetOrCreateProxy(1, "Setting2");
 
             Assert.Equal(42, value);
+        }
+
+        [Fact]
+        public async Task TransformationRemovesOldObject()
+        {
+            var blobCache = new TestBlobCache();
+            var storage = new SettingsStorageProxy(blobCache);
+            storage.SetOrCreateProxy(42, "Setting");
+
+            await storage.MigrateAsync(new[] { new TransformationMigration<int, string>(1, "Setting", x => x.ToString()) });
+
+            Assert.Throws<KeyNotFoundException>(() => blobCache.GetObjectAsync<int>("Setting").Wait());
         }
 
         [Fact]
