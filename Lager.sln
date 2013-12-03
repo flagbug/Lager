@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lager.Android", "Lager.Andr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidExample", "AndroidExample\AndroidExample.csproj", "{75745489-742E-4423-816D-1178C5529AE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lager.Portable_Android", "Lager.Portable_Android\Lager.Portable_Android.csproj", "{146AD439-7ABF-4398-B7A2-CD0DC6BD4AF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lager.Portable_Android", "Lager.Portable\Lager.Portable_Android.csproj", "{146AD439-7ABF-4398-B7A2-CD0DC6BD4AF2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AE25696A-FB1E-402F-BB77-2785BF811390}"
 	ProjectSection(SolutionItems) = preProject

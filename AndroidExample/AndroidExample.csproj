@@ -78,7 +78,7 @@
       <Project>{B65B033B-F457-4B6C-A00B-0D492F014681}</Project>
       <Name>Lager.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Lager.Portable_Android\Lager.Portable_Android.csproj">
+    <ProjectReference Include="..\Lager.Portable\Lager.Portable_Android.csproj">
       <Project>{146AD439-7ABF-4398-B7A2-CD0DC6BD4AF2}</Project>
       <Name>Lager.Portable_Android</Name>
     </ProjectReference>
