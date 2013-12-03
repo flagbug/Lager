@@ -42,6 +42,19 @@ namespace Lager
             await this.blobCache.InsertObject(this.CreateKey(newKey), value);
         }
 
+        protected async Task TransformAsync<TBefore, TAfter>(string key, Func<TBefore, TAfter> transformation)
+        {
+            key = this.CreateKey(key);
+
+            TBefore before = await this.blobCache.GetObjectAsync<TBefore>(key);
+
+            TAfter after = transformation(before);
+
+            await this.RemoveAsync<TBefore>(key);
+
+            await this.blobCache.InsertObject(key, after);
+        }
+
         private string CreateKey(string key)
         {
             return string.Format("{0}:{1}", this.keyPrefix, key);

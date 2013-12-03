@@ -81,6 +81,7 @@
     <Compile Include="RenameIntegerMigration.cs" />
     <Compile Include="SettingsStorageProxy.cs" />
     <Compile Include="SettingsStorageTest.cs" />
+    <Compile Include="TransformationMigration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

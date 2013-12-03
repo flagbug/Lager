@@ -30,5 +30,18 @@ namespace Lager.Tests
 
             Assert.Equal(42, value);
         }
+
+        [Fact]
+        public async Task TransformationSmokeTest()
+        {
+            var storage = new SettingsStorageProxy();
+            storage.SetOrCreateProxy(42, "Setting");
+
+            await storage.MigrateAsync(new[] { new TransformationMigration<int, string>(1, "Setting", x => x.ToString()) });
+
+            string value = storage.GetOrCreateProxy("Bla", "Setting");
+
+            Assert.Equal("42", value);
+        }
     }
 }
