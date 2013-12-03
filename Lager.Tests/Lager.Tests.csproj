@@ -83,9 +83,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lager.Portable\Lager.Portable.csproj">
+    <ProjectReference Include="..\Lager\Lager.csproj">
       <Project>{81f64819-c356-4eef-8dbf-bd3d092a2010}</Project>
-      <Name>Lager.Portable</Name>
+      <Name>Lager</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

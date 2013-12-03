@@ -6,7 +6,7 @@ using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace Lager.Portable
+namespace Lager
 {
     public abstract class SettingsStorage : INotifyPropertyChanged
     {

@@ -1,5 +1,5 @@
 using Android.Preferences;
-using Lager.Portable;
+using Lager;
 using ReactiveUI;
 using System;
 using System.Linq.Expressions;

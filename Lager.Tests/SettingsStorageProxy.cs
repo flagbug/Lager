@@ -1,5 +1,5 @@
 ﻿using Akavache;
-using Lager.Portable;
+using Lager;
 
 namespace Lager.Tests
 {
