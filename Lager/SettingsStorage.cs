@@ -19,7 +19,7 @@ namespace Lager
         /// Initializes a new instance of the <see cref="SettingsStorage"/> class.
         /// </summary>
         /// <param name="keyPrefix">This value will be used as prefix for all settings keys.
-        /// It should be reasonably unique, so that it doesn't collide with other keys in Akavache.</param>
+        /// It should be reasonably unique, so that it doesn't collide with other keys in the same <see cref="IBlobCache"/>.</param>
         /// <param name="cache">An <see cref="IBlobCache"/> implementation where you want your settings to be stored.</param>
         protected SettingsStorage(string keyPrefix, IBlobCache cache)
         {
