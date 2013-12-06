@@ -47,6 +47,8 @@ or
 That's simple, both `GetOrCreate` and `SetOrCreate` have a second optional parameter that is marked with the `CallerMemberName` attribute.
 This means a property called `MyCoolString` is stored with the key `MyCoolString`
 
+**Dont forget to shutdown Akavache properly!**
+
 ## Android
 
 Since the Android preferences API is a nightmare to use, Lager has a useful function called `BindToSetting`.
