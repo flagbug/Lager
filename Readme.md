@@ -9,6 +9,12 @@ It uses [Akavache](https://github.com/akavache/Akavache) as a simple storage pro
 Currently Lager can write and read every type of object that can be stored by Akavache.
 Later versions will also include some type of migration system, for renaming and deleting settings.
 
+# Installation
+
+The .NET 4.5 version is available on [NuGet](https://www.nuget.org/packages/Lager/)
+
+The Xamarin.Android version can be manually downloaded in the [Releases section](https://github.com/flagbug/Lager/releases)
+
 # Usage
 
 	public class UserSettings : SettingsStorage
