@@ -8,6 +8,10 @@ using System.Threading;
 
 namespace Lager
 {
+    /// <summary>
+    /// The base class for every settings storage.
+    /// Provides methods for saving/retrieving settings.
+    /// </summary>
     public abstract class SettingsStorage : INotifyPropertyChanged
     {
         private readonly IBlobCache blobCache;
