@@ -55,7 +55,7 @@ This means a property called `MyCoolString` is stored with the key `MyCoolString
 
 **Dont forget to shutdown Akavache properly!**
 
-## Android
+## Xamarin.Android
 
 Since the Android preferences API is a nightmare to use, Lager has a useful function called `BindToSetting`.
 `BindToSetting` is an extension method for the `Preference` class and creates a two-way binding between the `Preference` and a property in a `SettingsStorage`.
@@ -102,3 +102,10 @@ This is useful if you want to bind non-string types to the `Text` property of an
 
 With the sixth parameter you can validate user input. It takes a function that returns a `bool` and provides the value that the user has entered.
 Return true, and the value will be saved, return false and the value will be discarded.
+
+Xamarin.iOS
+
+Lager supports Xamarin.iOS, but there are no special bindings like the Android version has.
+This is simply because I have no Xamarin.iOS license.
+
+You may be able to leverage ReactiveUI bindings to bind a setting to an iOS setting, but I don't know how settings work in iOS. Anybody that submits a PR with support for this is welcome!
