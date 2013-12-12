@@ -103,7 +103,7 @@ This is useful if you want to bind non-string types to the `Text` property of an
 With the sixth parameter you can validate user input. It takes a function that returns a `bool` and provides the value that the user has entered.
 Return true, and the value will be saved, return false and the value will be discarded.
 
-Xamarin.iOS
+## Xamarin.iOS
 
 Lager supports Xamarin.iOS, but there are no special bindings like the Android version has.
 This is simply because I have no Xamarin.iOS license.
