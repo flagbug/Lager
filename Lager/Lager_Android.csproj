@@ -7,8 +7,8 @@
     <ProjectGuid>{11433FC4-CBDC-4BC7-9396-731797230887}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Lager_Android</RootNamespace>
-    <AssemblyName>Lager_Android</AssemblyName>
+    <RootNamespace>Lager</RootNamespace>
+    <AssemblyName>Lager</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
