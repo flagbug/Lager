@@ -80,7 +80,7 @@
       <Name>Lager.Android</Name>
     </ProjectReference>
     <ProjectReference Include="..\Lager\Lager_Android.csproj">
-      <Project>{146ad439-7abf-4398-b7a2-cd0dc6bd4af2}</Project>
+      <Project>{11433fc4-cbdc-4bc7-9396-731797230887}</Project>
       <Name>Lager_Android</Name>
     </ProjectReference>
   </ItemGroup>
