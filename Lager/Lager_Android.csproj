@@ -38,8 +38,8 @@
     <DocumentationFile>bin\Release\Android\Lager.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Akavache.Portable">
-      <HintPath>..\ext\Monoandroid\Akavache.Portable.dll</HintPath>
+    <Reference Include="Akavache">
+      <HintPath>..\ext\Monoandroid\Akavache.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />

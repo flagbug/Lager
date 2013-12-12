@@ -38,6 +38,10 @@
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Akavache, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ext\Monoandroid\Akavache.dll</HintPath>
+    </Reference>
     <Reference Include="Akavache.Mobile">
       <HintPath>..\ext\Monoandroid\Akavache.Mobile.dll</HintPath>
     </Reference>
@@ -45,9 +49,6 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Akavache.Portable">
-      <HintPath>..\ext\Monoandroid\Akavache.Portable.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

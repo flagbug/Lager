@@ -40,14 +40,17 @@
     <Compile Include="SettingsStorage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Akavache.Portable">
-      <HintPath>..\packages\akavache.portable.3.1.2\lib\portable-net45+win8+wp8\Akavache.Portable.dll</HintPath>
+    <Reference Include="Akavache">
+      <HintPath>..\packages\akavache.3.2.0\lib\Portable-Net45+WinRT45+WP8\Akavache.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\portable-net45+wp80+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="ReactiveUI">
       <HintPath>..\packages\reactiveui-core.5.2.0\lib\Portable-Net45+WinRT45+WP8\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Splat">
+      <HintPath>..\packages\Splat.1.0.0\lib\Portable-Net45+WinRT45+WP8\Splat.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Portable-Net45+WinRT45+WP8\System.Reactive.Core.dll</HintPath>
