@@ -86,9 +86,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="RemoveIntegerMigration.cs" />
+    <Compile Include="MigrationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenameIntegerMigration.cs" />
     <Compile Include="SettingsStorageProxy.cs" />
     <Compile Include="SettingsStorageTest.cs" />
+    <Compile Include="TransformationMigration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

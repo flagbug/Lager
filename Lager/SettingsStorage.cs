@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Lager
 {
@@ -41,6 +43,29 @@ namespace Lager
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public async Task MigrateAsync(IEnumerable<SettingsMigration> migrations)
+        {
+            List<SettingsMigration> migrationsList = migrations.ToList();
+
+            if (!migrationsList.Any())
+                throw new ArgumentException("Migration list is empty.", "migrations");
+
+            bool areRevisionsUnique = migrationsList
+                .GroupBy(x => x.Revision)
+                .All(x => x.Count() == 1);
+
+            if (!areRevisionsUnique)
+                throw new ArgumentException("Migration revisions aren't unique.", "migrations");
+
+            foreach (SettingsMigration migration in migrationsList.OrderBy(x => x.Revision))
+            {
+                migration.Initialize(this.keyPrefix, this.blobCache);
+                await migration.MigrateAsync();
+            }
+
+            this.cache.Clear();
+        }
 
         /// <summary>
         /// Gets the value for the specified key, or, if the value doesn't exist, saves the <paramref name="defaultValue"/> and returns it.
