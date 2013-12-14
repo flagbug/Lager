@@ -4,8 +4,8 @@ namespace Lager.Tests
 {
     public class DummySettingsStorage : SettingsStorage
     {
-        public DummySettingsStorage(IBlobCache cache)
-            : base("__DUMMYSTORAGE__", cache)
+        public DummySettingsStorage(string keyPrefix, IBlobCache cache)
+            : base(keyPrefix, cache)
         { }
 
         public int DummyNumber

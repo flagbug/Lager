@@ -89,7 +89,10 @@ namespace Lager
                 this.cacheLock.ExitReadLock();
             }
 
-            return this.blobCache.GetOrCreateObject(string.Format("{0}:{1}", this.keyPrefix, key), () => defaultValue).Wait();
+            T returnValue = this.blobCache.GetOrCreateObject(string.Format("{0}:{1}", this.keyPrefix, key), () => defaultValue)
+                .Do(x => this.AddToInternalCache(key, x)).Wait();
+
+            return returnValue;
         }
 
         /// <summary>
@@ -104,16 +107,21 @@ namespace Lager
             if (key == null)
                 throw new ArgumentNullException("key");
 
+            this.AddToInternalCache(key, value);
+
+            this.blobCache.InsertObject(string.Format("{0}:{1}", this.keyPrefix, key), value);
+
+            this.OnPropertyChanged(key);
+        }
+
+        private void AddToInternalCache(string key, object value)
+        {
             this.cacheLock.EnterWriteLock();
 
             this.cache.Remove(key);
             this.cache.Add(key, value);
 
             this.cacheLock.ExitWriteLock();
-
-            this.blobCache.InsertObject(string.Format("{0}:{1}", this.keyPrefix, key), value);
-
-            this.OnPropertyChanged(key);
         }
 
         private void OnPropertyChanged(string propertyName = null)
