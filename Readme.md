@@ -55,6 +55,10 @@ This means a property called `MyCoolString` is stored with the key `MyCoolString
 
 **Dont forget to shutdown Akavache properly!**
 
+## NET45, WP8, WinRT
+
+`SettingsStorage` implements the `INotifyPropertyChanged` interface, just use normal XAML-Bindings to bind the settings to your UI
+
 ## Xamarin.Android
 
 Since the Android preferences API is a nightmare to use, Lager has a useful function called `BindToSetting`.
