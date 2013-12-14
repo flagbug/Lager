@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reactive.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Lager
 {
@@ -41,6 +43,23 @@ namespace Lager
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Laods every setting in this storage into the internal cache, or, if the value doesn't exist in the storage,
+        /// initializes it with it's default value.
+        /// You dont HAVE to call this method, but it's handy for applications with a high number of settings
+        /// where you want to load all settings at once at startup into the internal cache and not one-by-one at each request.
+        /// </summary>
+        public Task InitializeAsync()
+        {
+            return Task.Run(() =>
+            {
+                foreach (var property in this.GetType().GetRuntimeProperties())
+                {
+                    property.GetValue(this);
+                }
+            });
+        }
 
         /// <summary>
         /// Gets the value for the specified key, or, if the value doesn't exist, saves the <paramref name="defaultValue"/> and returns it.

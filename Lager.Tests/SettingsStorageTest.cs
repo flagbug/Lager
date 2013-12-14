@@ -2,6 +2,8 @@
 using Moq;
 using System;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Lager.Tests
@@ -56,6 +58,27 @@ namespace Lager.Tests
             var settings = new SettingsStorageProxy();
 
             Assert.Throws<ArgumentNullException>(() => settings.GetOrCreateProxy(42, null));
+        }
+
+        [Fact]
+        public async Task InitializeAsyncLoadsValuesIntoCache()
+        {
+            var testCache = new TestBlobCache();
+            testCache.InsertObject("DummyNumber", 16);
+            testCache.InsertObject("DummyText", "Random");
+
+            var cache = new Mock<IBlobCache>();
+            cache.Setup(x => x.GetAsync(It.IsAny<string>())).Returns<string>(testCache.GetAsync);
+            var settings = new DummySettingsStorage(cache.Object);
+
+            await settings.InitializeAsync();
+
+            int number = settings.DummyNumber;
+            string text = settings.DummyText;
+
+            Assert.Equal(16, number);
+            Assert.Equal("Random", text);
+            cache.Verify(x => x.GetAsync(It.IsAny<string>()), Times.Exactly(2));
         }
 
         [Fact]
