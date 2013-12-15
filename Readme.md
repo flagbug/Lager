@@ -11,9 +11,9 @@ Later versions will also include some type of migration system, for renaming and
 
 # Installation
 
-The .NET 4.5 version is available on [NuGet](https://www.nuget.org/packages/Lager/)
+The .NET 4.5, WP8 and WinRT version is available on [NuGet](https://www.nuget.org/packages/Lager/)
 
-The Xamarin.Android version can be manually downloaded in the [Releases section](https://github.com/flagbug/Lager/releases)
+The Xamarin.Android & Xamarin.iOS versions can be manually downloaded in the [Releases section](https://github.com/flagbug/Lager/releases)
 
 # Usage
 
