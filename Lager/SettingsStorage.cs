@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reactive.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Lager
 {
@@ -43,6 +45,23 @@ namespace Lager
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
+        /// Loads every setting in this storage into the internal cache, or, if the value doesn't exist in the storage,
+        /// initializes it with its default value.
+        /// You dont HAVE to call this method, but it's handy for applications with a high number of settings
+        /// where you want to load all settings on startup at once into the internal cache and not one-by-one at each request.
+        /// </summary>
+        public Task InitializeAsync()
+        {
+            return Task.Run(() =>
+            {
+                foreach (var property in this.GetType().GetRuntimeProperties())
+                {
+                    property.GetValue(this);
+                }
+            });
+        }
+
+        /// <summary>
         /// Gets the value for the specified key, or, if the value doesn't exist, saves the <paramref name="defaultValue"/> and returns it.
         /// </summary>
         /// <typeparam name="T">The type of the value to get or create.</typeparam>
@@ -70,7 +89,10 @@ namespace Lager
                 this.cacheLock.ExitReadLock();
             }
 
-            return this.blobCache.GetOrCreateObject(string.Format("{0}:{1}", this.keyPrefix, key), () => defaultValue).Wait();
+            T returnValue = this.blobCache.GetOrCreateObject(string.Format("{0}:{1}", this.keyPrefix, key), () => defaultValue)
+                .Do(x => this.AddToInternalCache(key, x)).Wait();
+
+            return returnValue;
         }
 
         /// <summary>
@@ -85,16 +107,21 @@ namespace Lager
             if (key == null)
                 throw new ArgumentNullException("key");
 
+            this.AddToInternalCache(key, value);
+
+            this.blobCache.InsertObject(string.Format("{0}:{1}", this.keyPrefix, key), value);
+
+            this.OnPropertyChanged(key);
+        }
+
+        private void AddToInternalCache(string key, object value)
+        {
             this.cacheLock.EnterWriteLock();
 
             this.cache.Remove(key);
             this.cache.Add(key, value);
 
             this.cacheLock.ExitWriteLock();
-
-            this.blobCache.InsertObject(string.Format("{0}:{1}", this.keyPrefix, key), value);
-
-            this.OnPropertyChanged(key);
         }
 
         private void OnPropertyChanged(string propertyName = null)
