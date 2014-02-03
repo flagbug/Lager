@@ -21,7 +21,6 @@ The Xamarin.Android & Xamarin.iOS versions can be manually downloaded in the [Re
 	{
 		public UserSettings() : base("D5702B73-854F-4E92-93DD-99DB026918B4", BlobCache.UserAccount)
 		{ }
-		
 	}
 	
 So, what have we done here?
