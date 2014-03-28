@@ -64,8 +64,8 @@ namespace Lager.Tests
         public async Task InitializeAsyncLoadsValuesIntoCache()
         {
             var testCache = new TestBlobCache();
-            testCache.InsertObject("Storage:DummyNumber", 16);
-            testCache.InsertObject("Storage:DummyText", "Random");
+            await testCache.InsertObject("Storage:DummyNumber", 16);
+            await testCache.InsertObject("Storage:DummyText", "Random");
 
             var cache = new Mock<IBlobCache>();
             cache.Setup(x => x.GetAsync(It.IsAny<string>())).Returns<string>(testCache.GetAsync);

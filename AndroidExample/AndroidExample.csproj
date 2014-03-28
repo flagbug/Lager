@@ -42,9 +42,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ext\Monoandroid\Akavache.dll</HintPath>
     </Reference>
-    <Reference Include="Akavache.Mobile">
-      <HintPath>..\ext\Monoandroid\Akavache.Mobile.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />

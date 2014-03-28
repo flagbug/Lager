@@ -1,5 +1,4 @@
 using Android.Preferences;
-using Lager;
 using ReactiveUI;
 using System;
 using System.Linq.Expressions;
