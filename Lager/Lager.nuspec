@@ -14,6 +14,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A cross-platform settings storage for .NET</description>
     <summary>A cross-platform settings storage for .NET</summary>
-    <copyright>Copyright Dennis Daume 2013</copyright>
+    <copyright>Copyright Dennis Daume 2014</copyright>
   </metadata>
 </package>
