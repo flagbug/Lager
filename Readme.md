@@ -17,11 +17,13 @@ The Xamarin.Android & Xamarin.iOS versions can be manually downloaded in the [Re
 
 # Usage
 
-	public class UserSettings : SettingsStorage
-	{
-		public UserSettings() : base("D5702B73-854F-4E92-93DD-99DB026918B4", BlobCache.UserAccount)
-		{ }
-	}
+```cs
+public class UserSettings : SettingsStorage
+{
+	public UserSettings() : base("D5702B73-854F-4E92-93DD-99DB026918B4", BlobCache.UserAccount)
+	{ }
+}
+```
 	
 So, what have we done here?
 
@@ -33,19 +35,23 @@ The second parameter specifies the `IBlobCache` implementation of Akavache where
 
 Defining our settings is pretty easy too, just define properties that have the following structure:
 
-	public string MyCoolString
-	{
-		get { return this.GetOrCreate("Some default value"); }
-		set { this.SetOrCreate(value); }
-	}
+```cs
+public string MyCoolString
+{
+	get { return this.GetOrCreate("Some default value"); }
+	set { this.SetOrCreate(value); }
+}
+```
 	
 or
 
-	public int MyCoolNumber
-	{
-		get { return this.GetOrCreate(42); }
-		set { this.SetOrCreate(value); }
-	}
+```cs
+public int MyCoolNumber
+{
+    get { return this.GetOrCreate(42); }
+    set { this.SetOrCreate(value); }
+}
+```
 	
 *But wait, what is this magic? How does Lager know which setting it should retrieve when I call `GetOrCreate`?*
 
@@ -68,23 +74,27 @@ An example:
 
 Define you settings layout like normal, but without default values or any other nonsense
 
-	<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	  <EditTextPreference
-		  android:key="pref_text"
-		  android:summary="Save text here"
-		  android:title="Text" />
-	</PreferenceScreen>
+```xml
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <EditTextPreference
+	  android:key="pref_text"
+	  android:summary="Save text here"
+	  android:title="Text" />
+</PreferenceScreen>
+```
 
 And in your settings activity you simply write:
 
-	protected override void OnCreate(Bundle bundle)
-	{
-		// Layout setup and stuff
-		
-		var textPreference = (EditTextPreference)this.FindPreference("pref_text");
-		textPreference.BindToSetting(UserSettings.Instance, x => x.MySettingsString, x => x.Text, x => x.ToString());
-	}
-	
+```cs
+protected override void OnCreate(Bundle bundle)
+{
+    // Layout setup and stuff
+
+    var textPreference = (EditTextPreference)this.FindPreference("pref_text");
+    textPreference.BindToSetting(UserSettings.Instance, x => x.MySettingsString, x => x.Text, x => x.ToString());
+}
+```
+
 So what have we done here?
 
 As said before, `BindToSetting` is an extension method for the `Preference` class, so we pulled an instance of our `EditTextPreference` from our `PreferenceActivity`.
