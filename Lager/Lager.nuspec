@@ -16,4 +16,8 @@
     <summary>A cross-platform settings storage for .NET</summary>
     <copyright>Copyright Dennis Daume 2014</copyright>
   </metadata>
+  <files>
+      <file src="bin\Release\Lager.dll" target="lib\portable-net45+wp8+win8+monoandroid+monotouch\Lager.dll" />
+      <file src="bin\Release\Lager.xml" target="lib\portable-net45+wp8+win8+monoandroid+monotouch\Lager.xml" />
+   </files>
 </package>
