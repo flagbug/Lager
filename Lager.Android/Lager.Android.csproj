@@ -47,9 +47,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="ReactiveUI">
-      <HintPath>..\ext\Monoandroid\ReactiveUI.dll</HintPath>
-    </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\ext\Monoandroid\System.Reactive.Core.dll</HintPath>
     </Reference>
@@ -63,6 +60,7 @@
   <ItemGroup>
     <Compile Include="PreferenceExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lager\Lager_Android.csproj">

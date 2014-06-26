@@ -1,5 +1,5 @@
+using System.ComponentModel;
 using Android.Preferences;
-using ReactiveUI;
 using System;
 using System.Linq.Expressions;
 using System.Reactive.Disposables;
@@ -10,30 +10,40 @@ namespace Lager.Android
     public static class PreferenceExtensions
     {
         /// <summary>
-        /// Two-way binds a <see cref="Preference"/> to a setting in a <see cref="SettingsStorage"/> container.
+        /// Two-way binds a <see cref="Preference" /> to a setting in a <see cref="SettingsStorage"
+        /// /> container.
         /// </summary>
-        /// <typeparam name="TPreference">The type of the <see cref="Preference"/>.</typeparam>
-        /// <typeparam name="TStorage">The type of the <see cref="SettingsStorage"/>.</typeparam>
-        /// <typeparam name="TSProp">The type of the setting in the <see cref="SettingsStorage"/>.</typeparam>
-        /// <typeparam name="TPProp">The type of the property of the <see cref="Preference"/>.</typeparam>
-        /// <param name="preference">The instance of the <see cref="Preference"/> to bind.</param>
-        /// <param name="storage">The instance of the <see cref="SettingsStorage"/> to bind.</param>
-        /// <param name="settingProperty">An expression indication the setting that is bound on the <see cref="SettingsStorage"/>.</param>
-        /// <param name="prefProperty">An expression indicating the property that is bound on the <see cref="Preference"/>.</param>
+        /// <typeparam name="TPreference">The type of the <see cref="Preference" />.</typeparam>
+        /// <typeparam name="TStorage">The type of the <see cref="SettingsStorage" />.</typeparam>
+        /// <typeparam name="TSProp">
+        /// The type of the setting in the <see cref="SettingsStorage" />.
+        /// </typeparam>
+        /// <typeparam name="TPProp">
+        /// The type of the property of the <see cref="Preference" />.
+        /// </typeparam>
+        /// <param name="preference">The instance of the <see cref="Preference" /> to bind.</param>
+        /// <param name="storage">The instance of the <see cref="SettingsStorage" /> to bind.</param>
+        /// <param name="settingProperty">
+        /// An expression indication the setting that is bound on the <see cref="SettingsStorage" />.
+        /// </param>
+        /// <param name="prefProperty">
+        /// An expression indicating the property that is bound on the <see cref="Preference" />.
+        /// </param>
         /// <param name="preferencePropertyToSettingConverter">
-        /// A function to convert the <see cref="Preference"/> property to the setting.
-        /// Convert a <see cref="Java.Lang.Object"/> back to your setting type with this function.
+        /// A function to convert the <see cref="Preference" /> property to the setting. Convert a
+        /// <see cref="Java.Lang.Object" /> back to your setting type with this function.
         /// </param>
         /// <param name="settingToPreferencePropertyConverter">
-        /// An optional function to convert the setting to the <see cref="Preference"/> property.
-        /// Useful when you bind an enum to a <see cref="ListPreference"/>, where you want the enum to be converted to a string.
+        /// An optional function to convert the setting to the <see cref="Preference" /> property.
+        /// Useful when you bind an enum to a <see cref="ListPreference" />, where you want the enum
+        /// to be converted to a string.
         /// </param>
         /// <param name="validator">
         /// An optional function to determine whether the value of the setting is valid or not.
-        /// Return true if you want the value to be saved in your <see cref="SettingsStorage"/>,
+        /// Return true if you want the value to be saved in your <see cref="SettingsStorage" />,
         /// return false if you want to discard the value.
         /// </param>
-        /// <returns>An <see cref="IDisposable"/> that disconnects the binding when disposed.</returns>
+        /// <returns>An <see cref="IDisposable" /> that disconnects the binding when disposed.</returns>
         public static IDisposable BindToSetting<TPreference, TStorage, TSProp, TPProp>(
             this TPreference preference,
             TStorage storage,
@@ -60,7 +70,13 @@ namespace Lager.Android
             string preferencePropertyName = Reflection.SimpleExpressionToPropertyName(prefProperty);
             Action<object, object> preferenceSetter = Reflection.GetValueSetterForProperty(preference.GetType(), preferencePropertyName);
 
-            IDisposable disp2 = storage.WhenAnyValue(settingProperty)
+            IDisposable disp2 = Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                    h => storage.PropertyChanged += h, h => storage.PropertyChanged -= h)
+                .Select(x => x.EventArgs.PropertyName)
+                .Where(x => x == settingName)
+                .StartWith(settingName)
+                .Select(x => Reflection.GetValueFetcherForProperty(typeof(TStorage), x))
+                .Select(x => (TSProp)x(storage))
                 .Select(x => settingToPreferencePropertyConverter == null ? (object)x : settingToPreferencePropertyConverter(x))
                 .Subscribe(x => preferenceSetter(preference, x));
             disposable.Add(disp2);
