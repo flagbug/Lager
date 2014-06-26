@@ -9,8 +9,8 @@
     <dependencies>
       <dependency id="Akavache" version="3.99.1-beta" /> 
     </dependencies>
-    <id>Lager</id>
-    <title>Lager</title>
+    <id>Lager.Android</id>
+    <title>Lager.Android</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A cross-platform settings storage for .NET</description>
     <summary>A cross-platform settings storage for .NET</summary>
