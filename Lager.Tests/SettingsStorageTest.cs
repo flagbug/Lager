@@ -1,7 +1,6 @@
 ﻿using Akavache;
 using Moq;
 using System;
-using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -24,14 +23,14 @@ namespace Lager.Tests
         }
 
         [Fact]
-        public void GetOrCreateInsertsDefaultValueIntoBlobCache()
+        public async Task GetOrCreateInsertsDefaultValueIntoBlobCache()
         {
             var cache = new TestBlobCache();
             var settings = new SettingsStorageProxy(cache);
 
             settings.GetOrCreateProxy(42, "TestNumber");
 
-            Assert.Equal(1, cache.GetAllKeys().Count());
+            Assert.Equal(1, await cache.GetAllKeys().Count());
         }
 
         [Fact]
@@ -82,14 +81,14 @@ namespace Lager.Tests
         }
 
         [Fact]
-        public void SetOrCreateInsertsValueIntoBlobCache()
+        public async Task SetOrCreateInsertsValueIntoBlobCache()
         {
             var cache = new TestBlobCache();
             var settings = new SettingsStorageProxy(cache);
 
             settings.SetOrCreateProxy(42, "TestNumber");
 
-            Assert.Equal(1, cache.GetAllKeys().Count());
+            Assert.Equal(1, await cache.GetAllKeys().Count());
         }
 
         [Fact]
