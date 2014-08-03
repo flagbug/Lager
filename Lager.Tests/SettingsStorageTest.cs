@@ -25,7 +25,7 @@ namespace Lager.Tests
         [Fact]
         public async Task GetOrCreateInsertsDefaultValueIntoBlobCache()
         {
-            var cache = new TestBlobCache();
+            var cache = new InMemoryBlobCache();
             var settings = new SettingsStorageProxy(cache);
 
             settings.GetOrCreateProxy(42, "TestNumber");
@@ -62,12 +62,12 @@ namespace Lager.Tests
         [Fact]
         public async Task InitializeAsyncLoadsValuesIntoCache()
         {
-            var testCache = new TestBlobCache();
+            var testCache = new InMemoryBlobCache();
             await testCache.InsertObject("Storage:DummyNumber", 16);
             await testCache.InsertObject("Storage:DummyText", "Random");
 
             var cache = new Mock<IBlobCache>();
-            cache.Setup(x => x.GetAsync(It.IsAny<string>())).Returns<string>(testCache.GetAsync);
+            cache.Setup(x => x.Get(It.IsAny<string>())).Returns<string>(testCache.Get);
             var settings = new DummySettingsStorage("Storage", cache.Object);
 
             await settings.InitializeAsync();
@@ -77,13 +77,13 @@ namespace Lager.Tests
 
             Assert.Equal(16, number);
             Assert.Equal("Random", text);
-            cache.Verify(x => x.GetAsync(It.IsAny<string>()), Times.Exactly(2));
+            cache.Verify(x => x.Get(It.IsAny<string>()), Times.Exactly(2));
         }
 
         [Fact]
         public async Task SetOrCreateInsertsValueIntoBlobCache()
         {
-            var cache = new TestBlobCache();
+            var cache = new InMemoryBlobCache();
             var settings = new SettingsStorageProxy(cache);
 
             settings.SetOrCreateProxy(42, "TestNumber");
