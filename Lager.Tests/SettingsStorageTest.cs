@@ -1,8 +1,8 @@
 ﻿using Akavache;
-using Moq;
 using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using NSubstitute;
 using Xunit;
 
 namespace Lager.Tests
@@ -12,14 +12,14 @@ namespace Lager.Tests
         [Fact]
         public void GetOrCreateHitsInternalCacheFirst()
         {
-            var cache = new Mock<IBlobCache>();
-            var settings = new SettingsStorageProxy(cache.Object);
+            var cache = Substitute.For<IBlobCache>();
+            var settings = new SettingsStorageProxy(cache);
 
             settings.SetOrCreateProxy(42, "TestNumber");
 
             settings.GetOrCreateProxy(20, "TestNumber");
 
-            cache.Verify(x => x.Insert(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<DateTimeOffset?>()), Times.Once);
+            cache.ReceivedWithAnyArgs(1).Insert(Arg.Any<string>(), Arg.Any<byte[]>(), Arg.Any<DateTimeOffset?>());
         }
 
         [Fact]
@@ -66,9 +66,9 @@ namespace Lager.Tests
             await testCache.InsertObject("Storage:DummyNumber", 16);
             await testCache.InsertObject("Storage:DummyText", "Random");
 
-            var cache = new Mock<IBlobCache>();
-            cache.Setup(x => x.Get(It.IsAny<string>())).Returns<string>(testCache.Get);
-            var settings = new DummySettingsStorage("Storage", cache.Object);
+            var cache = Substitute.For<IBlobCache>();
+            cache.Get(Arg.Any<string>()).Returns(x => testCache.Get(x.Arg<string>()));
+            var settings = new DummySettingsStorage("Storage", cache);
 
             await settings.InitializeAsync();
 
@@ -77,7 +77,7 @@ namespace Lager.Tests
 
             Assert.Equal(16, number);
             Assert.Equal("Random", text);
-            cache.Verify(x => x.Get(It.IsAny<string>()), Times.Exactly(2));
+            cache.ReceivedWithAnyArgs(2).Get(Arg.Any<string>());
         }
 
         [Fact]
