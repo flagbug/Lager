@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <version>0.3.101-beta</version>
+    <version>0.4.0</version>
     <authors>Dennis Daume</authors>
     <owners>Dennis Daume</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://github.com/flagbug/Lager</projectUrl>
     <dependencies>
-	  <dependency id="Lager" version="0.3.101-beta" /> 
+	  <dependency id="Lager" version="0.4.0" /> 
     </dependencies>
     <id>Lager.Android</id>
     <title>Lager.Android</title>
