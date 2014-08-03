@@ -1,12 +1,11 @@
 ﻿using Akavache;
-using Lager;
 
 namespace Lager.Tests
 {
     public class SettingsStorageProxy : SettingsStorage
     {
         public SettingsStorageProxy(IBlobCache blobCache = null)
-            : base("#Storage#", blobCache ?? new TestBlobCache())
+            : base("#Storage#", blobCache ?? new InMemoryBlobCache())
         { }
 
         public T GetOrCreateProxy<T>(T defaultValue, string key)

@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lager", "Lager\Lager.csproj", "{81F64819-C356-4EEF-8DBF-BD3D092A2010}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lager.Tests", "Lager.Tests\Lager.Tests.csproj", "{BBC75316-B356-4896-A3F3-AD82DEB1B1B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lager.Android", "Lager.Android\Lager.Android.csproj", "{B65B033B-F457-4B6C-A00B-0D492F014681}"
-	ProjectSection(ProjectDependencies) = postProject
-		{11433FC4-CBDC-4BC7-9396-731797230887} = {11433FC4-CBDC-4BC7-9396-731797230887}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidExample", "AndroidExample\AndroidExample.csproj", "{75745489-742E-4423-816D-1178C5529AE4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{11433FC4-CBDC-4BC7-9396-731797230887} = {11433FC4-CBDC-4BC7-9396-731797230887}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AE25696A-FB1E-402F-BB77-2785BF811390}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,10 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AE2569
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lager_iOS", "Lager\Lager_iOS.csproj", "{A48FF020-D869-44D7-AB03-E3A8682D4924}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lager_Android", "Lager\Lager_Android.csproj", "{11433FC4-CBDC-4BC7-9396-731797230887}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,17 +41,12 @@ Global
 		{75745489-742E-4423-816D-1178C5529AE4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{75745489-742E-4423-816D-1178C5529AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75745489-742E-4423-816D-1178C5529AE4}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{A48FF020-D869-44D7-AB03-E3A8682D4924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A48FF020-D869-44D7-AB03-E3A8682D4924}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A48FF020-D869-44D7-AB03-E3A8682D4924}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A48FF020-D869-44D7-AB03-E3A8682D4924}.Release|Any CPU.Build.0 = Release|Any CPU
-		{11433FC4-CBDC-4BC7-9396-731797230887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11433FC4-CBDC-4BC7-9396-731797230887}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11433FC4-CBDC-4BC7-9396-731797230887}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11433FC4-CBDC-4BC7-9396-731797230887}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(CodealikeProperties) = postSolution
+		SolutionGuid = 1d030a89-6452-4673-a853-5def3c7a4955
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = AndroidExample\AndroidExample.csproj

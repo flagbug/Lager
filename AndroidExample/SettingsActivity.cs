@@ -17,7 +17,7 @@ namespace AndroidExample
 
             this.AddPreferencesFromResource(Resource.Layout.Settings);
 
-            var storage = new TestSettings(BlobCache.UserAccount);
+            var storage = new TestSettings(BlobCache.InMemory);
 
             var textPreference = (EditTextPreference)this.FindPreference("pref_text");
             textPreference.BindToSetting(storage, x => x.Text, x => x.Text, x => x.ToString());

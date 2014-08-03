@@ -7,17 +7,17 @@
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://github.com/flagbug/Lager</projectUrl>
     <dependencies>
-      <dependency id="Akavache" version="3.99.1-beta" /> 
+	  <dependency id="Lager" version="0.3.101-beta" /> 
     </dependencies>
-    <id>Lager</id>
-    <title>Lager</title>
+    <id>Lager.Android</id>
+    <title>Lager.Android</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A cross-platform settings storage for .NET</description>
     <summary>A cross-platform settings storage for .NET</summary>
     <copyright>Copyright Dennis Daume 2014</copyright>
   </metadata>
   <files>
-      <file src="bin\Release\Lager.dll" target="lib\portable-net45+wp8+win8+monoandroid+monotouch\Lager.dll" />
-      <file src="bin\Release\Lager.xml" target="lib\portable-net45+wp8+win8+monoandroid+monotouch\Lager.xml" />
-   </files>
+      <file src="bin\Release\Lager.Android.dll" target="lib\monoandroid\Lager.Android.dll" />
+      <file src="bin\Release\Lager.Android.xml" target="lib\monoandroid\Lager.Android.xml" />
+  </files>
 </package>

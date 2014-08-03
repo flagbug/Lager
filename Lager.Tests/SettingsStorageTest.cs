@@ -1,9 +1,8 @@
 ﻿using Akavache;
-using Moq;
 using System;
-using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using NSubstitute;
 using Xunit;
 
 namespace Lager.Tests
@@ -13,25 +12,25 @@ namespace Lager.Tests
         [Fact]
         public void GetOrCreateHitsInternalCacheFirst()
         {
-            var cache = new Mock<IBlobCache>();
-            var settings = new SettingsStorageProxy(cache.Object);
+            var cache = Substitute.For<IBlobCache>();
+            var settings = new SettingsStorageProxy(cache);
 
             settings.SetOrCreateProxy(42, "TestNumber");
 
             settings.GetOrCreateProxy(20, "TestNumber");
 
-            cache.Verify(x => x.Insert(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<DateTimeOffset?>()), Times.Once);
+            cache.ReceivedWithAnyArgs(1).Insert(Arg.Any<string>(), Arg.Any<byte[]>(), Arg.Any<DateTimeOffset?>());
         }
 
         [Fact]
-        public void GetOrCreateInsertsDefaultValueIntoBlobCache()
+        public async Task GetOrCreateInsertsDefaultValueIntoBlobCache()
         {
-            var cache = new TestBlobCache();
+            var cache = new InMemoryBlobCache();
             var settings = new SettingsStorageProxy(cache);
 
             settings.GetOrCreateProxy(42, "TestNumber");
 
-            Assert.Equal(1, cache.GetAllKeys().Count());
+            Assert.Equal(1, await cache.GetAllKeys().Count());
         }
 
         [Fact]
@@ -63,13 +62,13 @@ namespace Lager.Tests
         [Fact]
         public async Task InitializeAsyncLoadsValuesIntoCache()
         {
-            var testCache = new TestBlobCache();
-            testCache.InsertObject("Storage:DummyNumber", 16);
-            testCache.InsertObject("Storage:DummyText", "Random");
+            var testCache = new InMemoryBlobCache();
+            await testCache.InsertObject("Storage:DummyNumber", 16);
+            await testCache.InsertObject("Storage:DummyText", "Random");
 
-            var cache = new Mock<IBlobCache>();
-            cache.Setup(x => x.GetAsync(It.IsAny<string>())).Returns<string>(testCache.GetAsync);
-            var settings = new DummySettingsStorage("Storage", cache.Object);
+            var cache = Substitute.For<IBlobCache>();
+            cache.Get(Arg.Any<string>()).Returns(x => testCache.Get(x.Arg<string>()));
+            var settings = new DummySettingsStorage("Storage", cache);
 
             await settings.InitializeAsync();
 
@@ -78,18 +77,18 @@ namespace Lager.Tests
 
             Assert.Equal(16, number);
             Assert.Equal("Random", text);
-            cache.Verify(x => x.GetAsync(It.IsAny<string>()), Times.Exactly(2));
+            cache.ReceivedWithAnyArgs(2).Get(Arg.Any<string>());
         }
 
         [Fact]
-        public void SetOrCreateInsertsValueIntoBlobCache()
+        public async Task SetOrCreateInsertsValueIntoBlobCache()
         {
-            var cache = new TestBlobCache();
+            var cache = new InMemoryBlobCache();
             var settings = new SettingsStorageProxy(cache);
 
             settings.SetOrCreateProxy(42, "TestNumber");
 
-            Assert.Equal(1, cache.GetAllKeys().Count());
+            Assert.Equal(1, await cache.GetAllKeys().Count());
         }
 
         [Fact]
