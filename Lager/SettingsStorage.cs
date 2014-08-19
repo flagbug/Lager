@@ -129,8 +129,7 @@ namespace Lager
         {
             this.cacheLock.EnterWriteLock();
 
-            this.cache.Remove(key);
-            this.cache.Add(key, value);
+            this.cache[key] = value;
 
             this.cacheLock.ExitWriteLock();
         }
