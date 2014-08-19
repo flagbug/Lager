@@ -119,7 +119,8 @@ namespace Lager
 
             this.AddToInternalCache(key, value);
 
-            this.blobCache.InsertObject(string.Format("{0}:{1}", this.keyPrefix, key), value);
+            // Fire and forget, we retrieve the value from the in-memory cache from now on
+            this.blobCache.InsertObject(string.Format("{0}:{1}", this.keyPrefix, key), value).Subscribe();
 
             this.OnPropertyChanged(key);
         }
