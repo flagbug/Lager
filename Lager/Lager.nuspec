@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <version>0.4.2</version>
+    <version>0.5.0</version>
     <authors>Dennis Daume</authors>
     <owners>Dennis Daume</owners>
     <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://github.com/flagbug/Lager</projectUrl>
     <dependencies>
-      <dependency id="Akavache.Core" version="4.0.0" /> 
+      <dependency id="Akavache.Core" version="5.0.0" />
     </dependencies>
     <id>Lager</id>
     <title>Lager</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A cross-platform settings storage for .NET</description>
     <summary>A cross-platform settings storage for .NET</summary>
-    <copyright>Copyright Dennis Daume 2014</copyright>
+    <copyright>Copyright Dennis Daume 2017</copyright>
   </metadata>
   <files>
-      <file src="bin\Release\Lager.dll" target="lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Lager.dll" />
-      <file src="bin\Release\Lager.xml" target="lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Lager.xml" />
-   </files>
+    <file src="bin\Release\Lager.dll" target="lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Lager.dll" />
+    <file src="bin\Release\Lager.xml" target="lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\Lager.xml" />
+  </files>
 </package>
