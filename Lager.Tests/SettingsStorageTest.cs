@@ -77,7 +77,9 @@ namespace Lager.Tests
 
             Assert.Equal(16, number);
             Assert.Equal("Random", text);
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             cache.ReceivedWithAnyArgs(2).Get(Arg.Any<string>());
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
         [Fact]

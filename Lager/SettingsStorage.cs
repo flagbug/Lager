@@ -21,30 +21,32 @@ namespace Lager
         private readonly string keyPrefix;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsStorage" /> class.
+        /// Initializes a new instance of the <see cref="SettingsStorage"/> class.
         /// </summary>
         /// <param name="keyPrefix">
         /// This value will be used as prefix for all settings keys. It should be reasonably unique,
-        /// so that it doesn't collide with other keys in the same <see cref="IBlobCache" />.
+        /// so that it doesn't collide with other keys in the same <see cref="IBlobCache"/>.
         /// </param>
         /// <param name="cache">
-        /// An <see cref="IBlobCache" /> implementation where you want your settings to be stored.
+        /// An <see cref="IBlobCache"/> implementation where you want your settings to be stored.
         /// </param>
         protected SettingsStorage(string keyPrefix, IBlobCache cache)
         {
-            if (String.IsNullOrWhiteSpace(keyPrefix))
-                throw new ArgumentException("Invalid key prefix", "keyPrefix");
-
-            if (cache == null)
-                throw new ArgumentNullException("cache");
+            if (string.IsNullOrWhiteSpace(keyPrefix))
+            {
+                throw new ArgumentException("Invalid key prefix", nameof(keyPrefix));
+            }
 
             this.keyPrefix = keyPrefix;
-            this.blobCache = cache;
+            this.blobCache = cache ?? throw new ArgumentNullException(nameof(cache));
 
             this.cache = new Dictionary<string, object>();
             this.cacheLock = new ReaderWriterLockSlim();
         }
 
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
@@ -65,41 +67,46 @@ namespace Lager
         }
 
         /// <summary>
-        /// Gets the value for the specified key, or, if the value doesn't exist, saves the
-        /// <paramref name="defaultValue" /> and returns it.
+        /// Gets the value for the specified key, or, if the value doesn't exist, saves the <paramref
+        /// name="defaultValue"/> and returns it.
         /// </summary>
         /// <typeparam name="T">The type of the value to get or create.</typeparam>
         /// <param name="defaultValue">The default value, if no value is saved yet.</param>
-        /// <param name="key">
-        /// The key of the setting. Automatically set through the <see
-        /// cref="CallerMemberNameAttribute" />.
-        /// </param>
+        /// <param name="key">The key of the setting. Automatically set through the <see cref="CallerMemberNameAttribute"/>.</param>
         protected T GetOrCreate<T>(T defaultValue, [CallerMemberName] string key = null)
         {
             if (key == null)
-                throw new ArgumentNullException("key");
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             this.cacheLock.EnterReadLock();
 
             try
             {
-                object value;
-
-                if (this.cache.TryGetValue(key, out value))
+                if (this.cache.TryGetValue(key, out object value))
                 {
                     return (T)value;
                 }
             }
-
             finally
             {
                 this.cacheLock.ExitReadLock();
             }
 
-            T returnValue = this.blobCache.GetOrCreateObject(string.Format("{0}:{1}", this.keyPrefix, key), () => defaultValue)
+            T returnValue = this.blobCache.GetOrCreateObject($"{this.keyPrefix}:{key}", () => defaultValue)
                 .Do(x => this.AddToInternalCache(key, x)).Wait();
 
             return returnValue;
+        }
+
+        /// <summary>
+        /// Called when [property changed].
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        protected void OnPropertyChanged(string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -108,19 +115,18 @@ namespace Lager
         /// </summary>
         /// <typeparam name="T">The type of the value to set or create.</typeparam>
         /// <param name="value">The value to be set or created.</param>
-        /// <param name="key">
-        /// The key of the setting. Automatically set through the <see
-        /// cref="CallerMemberNameAttribute" />.
-        /// </param>
+        /// <param name="key">The key of the setting. Automatically set through the <see cref="CallerMemberNameAttribute"/>.</param>
         protected void SetOrCreate<T>(T value, [CallerMemberName] string key = null)
         {
             if (key == null)
-                throw new ArgumentNullException("key");
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             this.AddToInternalCache(key, value);
 
             // Fire and forget, we retrieve the value from the in-memory cache from now on
-            this.blobCache.InsertObject(string.Format("{0}:{1}", this.keyPrefix, key), value).Subscribe();
+            this.blobCache.InsertObject($"{this.keyPrefix}:{key}", value).Subscribe();
 
             this.OnPropertyChanged(key);
         }
@@ -132,12 +138,6 @@ namespace Lager
             this.cache[key] = value;
 
             this.cacheLock.ExitWriteLock();
-        }
-
-        private void OnPropertyChanged(string propertyName = null)
-        {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
